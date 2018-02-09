@@ -17,7 +17,7 @@ public class Dot {
   private Map<String, Edge> edgeMap = new HashMap<>();
   private Set<Face> faces; /* A NULL grid_face means infinite outside face */
 
-  Dot(int x, int y) {
+  public Dot(int x, int y) {
     this.x = x;
     this.y = y;
   }

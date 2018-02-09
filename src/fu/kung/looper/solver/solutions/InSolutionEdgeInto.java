@@ -10,6 +10,7 @@ import fu.kung.looper.solver.grid.Face;
 import fu.kung.looper.solver.grid.Grid;
 import fu.kung.looper.solver.grid.GridMutation;
 import java.util.List;
+import java.util.Set;
 
 /**
  * If one IN_SOLUTION edge is going into a face of clue 1 then the two edges opposite where the edge
@@ -35,8 +36,25 @@ public class InSolutionEdgeInto extends Solution {
             Dot oppositeDot = face.getDotOppositeDot(dot);
             if (oppositeDot.getMatchingEdges(Status.UNDECIDED).size() == 3) {
               Face oppositeFace = face.getOppositeFace(grid, oppositeDot);
-              if (oppositeFace == null || (oppositeFace.getClue()
-                  < oppositeFace.getMatchingEdges(Status.IN_SOLUTION).size())) {
+              if (oppositeFace != null) {
+                if (oppositeFace.getClue() == -1) {
+                  if (oppositeDot.getMatchingEdges(Status.OUT_SOLUTION).size() == 1) {
+                    Set<Edge> edge = Sets.difference(
+                        oppositeDot.getMatchingEdges(Status.UNDECIDED),
+                        face.getEdgesUsingDot(oppositeDot));
+                    if (edge.size() != 1) {
+                      throw new IllegalStateException("There can be only one!");
+                    }
+                    mutations.add(new GridMutation(edge.iterator().next(), Status.IN_SOLUTION));
+                  }
+                } else if (oppositeFace.getClue()
+                    < oppositeFace.getMatchingEdges(Status.IN_SOLUTION).size()) {
+                  mutations.add(
+                      new GridMutation(Sets.difference(
+                          oppositeDot.getMatchingEdges(Status.UNDECIDED),
+                          face.getEdgesUsingDot(oppositeDot)).iterator().next()));
+                }
+              } else {
                 mutations.add(
                     new GridMutation(Sets.difference(
                         oppositeDot.getMatchingEdges(Status.UNDECIDED),
@@ -63,6 +81,20 @@ public class InSolutionEdgeInto extends Solution {
           mutations.add(new GridMutation(nonFaceEdges.get(0), Status.OUT_SOLUTION));
         } else {
           mutations.add(new GridMutation(nonFaceEdges.get(1), Status.OUT_SOLUTION));
+        }
+      }
+
+      if (face.getClue() == 2
+          && dot.getSingleEdgeNotInFaceMatching(face, Status.IN_SOLUTION) != null
+          && face.faceEdgesUsingDotMatch(dot, Status.UNDECIDED)
+          && face.getMatchingEdges(Status.UNDECIDED).size() == 3
+          && face.getMatchingEdges(Status.OUT_SOLUTION).size() == 1
+          && dot.getMatchingEdges(Status.UNDECIDED).size() == 2
+          && dot.getMatchingEdges(Status.OUT_SOLUTION).size() == 1) {
+        for (Edge edge : face.getEdgesOppositeDot(dot)) {
+          if (edge.getStatus() == Status.UNDECIDED) {
+            mutations.add(new GridMutation(edge, Status.IN_SOLUTION));
+          }
         }
       }
     }

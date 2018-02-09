@@ -19,7 +19,6 @@ public class OneWithALongEdgeTest {
     Grid grid = new Grid(2, 2);
     grid.setGridClues(new int[]{1, -1, -1, -1});
     assertTrue(TestSolver.applySolution(grid, new OneWithALongEdge()));
-    grid.outputSvg("/usr/local/google/home/jefffletcher/loopout.svg");
     assertArrayEquals(new int[]{9, 0}, grid.getFaceStatus(Status.OUT_SOLUTION)[0]);
 
     assertFalse(TestSolver.applySolution(grid, new OneWithALongEdge()));

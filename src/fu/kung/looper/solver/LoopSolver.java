@@ -1,6 +1,8 @@
 package fu.kung.looper.solver;
 
 import com.google.common.collect.Lists;
+import fu.kung.looper.solver.grid.Dot;
+import fu.kung.looper.solver.grid.Edge;
 import fu.kung.looper.solver.grid.Edge.Status;
 import fu.kung.looper.solver.grid.Face;
 import fu.kung.looper.solver.grid.Grid;
@@ -47,8 +49,9 @@ public class LoopSolver {
     // This can be done once at the beginning
     applySolution(new MarkInitialFaces());
 
-    // for (int i = 0; i < 1; i++) {
+    // for (int i = 0; i < 30; i++) {
     //   runCleanupSolutions();
+    //   grid.outputSvg("/usr/local/google/home/jefffletcher/loopout.svg");
     // }
     // applySolution(new OneWithALongEdge());
     // runCleanupSolutions();
@@ -60,6 +63,7 @@ public class LoopSolver {
     boolean done = false;
     while (!done) {
       while (runCleanupSolutions()) {
+        grid.outputSvg("/usr/local/google/home/jefffletcher/loopout.svg");
       }
 
       if (!grid.isSolved()) {
@@ -67,6 +71,7 @@ public class LoopSolver {
         if (!applySolution(new RemoveSmallLoop())) {
           done = true;
         }
+        grid.outputSvg("/usr/local/google/home/jefffletcher/loopout.svg");
       } else {
         System.out.println("Voila!");
         done = true;
@@ -105,7 +110,13 @@ public class LoopSolver {
     boolean gridWasMutated = false;
     for (GridMutation mutation : mutations) {
       if (mutation.getNewStatus() != mutation.getOriginalStatus()) {
-        mutation.getEdge().setStatus(mutation.getNewStatus());
+        Edge mutatedEdge = mutation.getEdge();
+        mutatedEdge.setStatus(mutation.getNewStatus());
+
+        // if (mutatedEdge.equals(new Edge(new Dot(1, 9), new Dot(1, 10)))) {
+        //   System.out.printf("Problem here: %s%n%s%n", solution, mutatedEdge);
+        // }
+
         for (Face face : mutation.getEdge().getFaces()) {
           if (face.getClue() > -1
               && face.getMatchingEdges(Status.IN_SOLUTION).size() > face.getClue()) {

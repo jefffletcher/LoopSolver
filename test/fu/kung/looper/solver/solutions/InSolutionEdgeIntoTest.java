@@ -67,6 +67,9 @@ public class InSolutionEdgeIntoTest {
     assertTrue(TestSolver.applySolution(grid, new InSolutionEdgeInto()));
     assertArrayEquals(new int[]{4, 8}, grid.getFaceStatus(Status.OUT_SOLUTION)[0]);
 
+    assertTrue(TestSolver.applySolution(grid, new InSolutionEdgeInto()));
+    assertArrayEquals(new int[]{1, 2}, grid.getFaceStatus(Status.IN_SOLUTION)[1]);
+
     assertFalse(TestSolver.applySolution(grid, new InSolutionEdgeInto()));
   }
 
@@ -78,6 +81,47 @@ public class InSolutionEdgeIntoTest {
     face.getEdge(DIR.W).setStatus(Status.IN_SOLUTION);
     Face face2 = grid.getFace(1, 1);
     face2.getEdge(DIR.S).setStatus(Status.IN_SOLUTION);
+
+    assertFalse(TestSolver.applySolution(grid, new InSolutionEdgeInto()));
+  }
+
+  @Test
+  public void testTwoNotApplied() {
+    Grid grid = new Grid(3, 3);
+    grid.setGridClues(new int[]{3, 2, -1, 2, -1, -1, -1, -1, -1});
+    grid.getFace(0, 0).getEdge(DIR.W).setStatus(Status.IN_SOLUTION);
+    grid.getFace(0, 0).getEdge(DIR.N).setStatus(Status.IN_SOLUTION);
+    grid.getFace(1, 2).getEdge(DIR.E).setStatus(Status.IN_SOLUTION);
+    grid.getFace(1, 2).getEdge(DIR.W).setStatus(Status.IN_SOLUTION);
+    grid.getFace(2, 1).getEdge(DIR.W).setStatus(Status.IN_SOLUTION);
+    grid.getFace(2, 1).getEdge(DIR.E).setStatus(Status.IN_SOLUTION);
+    grid.getFace(2, 1).getEdge(DIR.N).setStatus(Status.OUT_SOLUTION);
+    grid.getFace(2, 2).getEdge(DIR.E).setStatus(Status.IN_SOLUTION);
+    grid.getFace(2, 2).getEdge(DIR.N).setStatus(Status.OUT_SOLUTION);
+
+    assertFalse(TestSolver.applySolution(grid, new InSolutionEdgeInto()));
+  }
+
+  @Test
+  public void testTwoIntoNoClueFace() {
+    Grid grid = new Grid(3, 3);
+    grid.setGridClues(new int[]{-1, -1,-1, -1, 2, -1, -1, -1, 3});
+    grid.getFace(0, 0).getEdge(DIR.W).setStatus(Status.OUT_SOLUTION);
+    grid.getFace(0, 0).getEdge(DIR.E).setStatus(Status.OUT_SOLUTION);
+    grid.getFace(0, 0).getEdge(DIR.N).setStatus(Status.IN_SOLUTION);
+    grid.getFace(0, 1).getEdge(DIR.E).setStatus(Status.IN_SOLUTION);
+    grid.getFace(0, 1).getEdge(DIR.N).setStatus(Status.IN_SOLUTION);
+    grid.getFace(1, 2).getEdge(DIR.N).setStatus(Status.OUT_SOLUTION);
+    grid.getFace(1, 2).getEdge(DIR.E).setStatus(Status.OUT_SOLUTION);
+    grid.getFace(2, 0).getEdge(DIR.W).setStatus(Status.OUT_SOLUTION);
+    grid.getFace(2, 0).getEdge(DIR.E).setStatus(Status.OUT_SOLUTION);
+    grid.getFace(2, 0).getEdge(DIR.S).setStatus(Status.OUT_SOLUTION);
+    grid.getFace(2, 1).getEdge(DIR.S).setStatus(Status.OUT_SOLUTION);
+    grid.getFace(2, 2).getEdge(DIR.S).setStatus(Status.IN_SOLUTION);
+    grid.getFace(2, 2).getEdge(DIR.W).setStatus(Status.IN_SOLUTION);
+
+    assertTrue(TestSolver.applySolution(grid, new InSolutionEdgeInto()));
+    assertArrayEquals(new int[]{2, 0, 0}, grid.getFaceStatus(Status.IN_SOLUTION)[1]);
 
     assertFalse(TestSolver.applySolution(grid, new InSolutionEdgeInto()));
   }

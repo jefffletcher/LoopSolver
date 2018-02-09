@@ -18,7 +18,7 @@ public class Edge {
     OUT_SOLUTION
   }
 
-  Edge(Dot dot1, Dot dot2) {
+  public Edge(Dot dot1, Dot dot2) {
     // One dot will always be closer to 0 (assuming they're on a grid). Set that
     // closest one to dot1, so equals works well.
     int dot1Sum = dot1.getX() + dot1.getY();

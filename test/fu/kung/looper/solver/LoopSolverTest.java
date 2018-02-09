@@ -130,6 +130,33 @@ public class LoopSolverTest {
 
     LoopSolver solver = new LoopSolver(grid);
     solver.solve();
-    grid.outputSvg("/usr/local/google/home/jefffletcher/loopout.svg");
+    // grid.outputSvg("/usr/local/google/home/jefffletcher/loopout.svg");
+    assertTrue(
+        Arrays.deepEquals(grid.getFaceStatus(Status.IN_SOLUTION),
+            new int[][]{
+                {9, 3, 7, 8, 4, 13, 12, 13, 12, 13},
+                {12, 11, 3, 0, 4, 12, 12, 12, 12, 12},
+                {8, 3, 5, 10, 4, 12, 12, 12, 12, 12},
+                {14, 13, 10, 5, 12, 12, 12, 12, 14, 12},
+                {3, 2, 7, 12, 14, 12, 14, 8, 3, 6},
+                {11, 3, 3, 2, 3, 0, 3, 6, 9, 3},
+                {3, 3, 3, 3, 7, 12, 11, 3, 6, 13},
+                {11, 3, 1, 3, 3, 0, 3, 1, 3, 6},
+                {3, 7, 12, 11, 5, 14, 13, 12, 11, 3},
+                {11, 3, 2, 7, 8, 1, 4, 10, 3, 7}}));
+
+    assertTrue(
+        Arrays.deepEquals(grid.getFaceStatus(Status.OUT_SOLUTION),
+            new int[][]{
+                {6, 12, 8, 7, 11, 2, 3, 2, 3, 2},
+                {3, 4, 12, 15, 11, 3, 3, 3, 3, 3},
+                {7, 12, 10, 5, 11, 3, 3, 3, 3, 3},
+                {1, 2, 5, 10, 3, 3, 3, 3, 1, 3},
+                {12, 13, 8, 3, 1, 3, 1, 7, 12, 9},
+                {4, 12, 12, 13, 12, 15, 12, 9, 6, 12},
+                {12, 12, 12, 12, 8, 3, 4, 12, 9, 2},
+                {4, 12, 14, 12, 12, 15, 12, 14, 12, 9},
+                {12, 8, 3, 4, 10, 1, 2, 3, 4, 12},
+                {4, 12, 13, 8, 7, 14, 11, 5, 12, 8}}));
   }
 }

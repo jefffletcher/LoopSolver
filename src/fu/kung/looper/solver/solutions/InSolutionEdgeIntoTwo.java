@@ -19,10 +19,7 @@ public class InSolutionEdgeIntoTwo extends Solution {
     }
 
     for (Dot dot : face.getGridDots()) {
-      if (Sets.intersection(
-          face.getEdgesUsingDot(dot),
-          dot.getMatchingEdges(Status.UNDECIDED)).size() == 2) {
-        // The two face edges shared by this dot are both UNDECIDED
+      if (face.faceEdgesUsingDotMatch(dot, Status.UNDECIDED)) {
         if (dot.getMatchingEdges(Status.UNDECIDED).size() == 3
             && dot.getMatchingEdges(Status.IN_SOLUTION).size() == 1) {
           // There are 2 non-face edges coming in that are one UNDECIDED and one IN_SOLUTION

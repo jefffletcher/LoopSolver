@@ -25,15 +25,13 @@ public class InSolutionEdgeInto extends Solution {
 
     for (Dot dot : face.getGridDots()) {
       if (dot.getSingleEdgeNotInFaceMatching(face, Status.IN_SOLUTION) != null
-          && Sets.intersection(dot.getMatchingEdges(Status.UNDECIDED),
-          face.getMatchingEdges(Status.UNDECIDED)).size() == 2) {
+          && face.faceEdgesUsingDotMatch(dot, Status.UNDECIDED)) {
         if (face.getClue() == 1) {
           for (Edge edge : face.getEdgesOppositeDot(dot)) {
             mutations.add(new GridMutation(edge, Status.OUT_SOLUTION));
           }
         } else if (face.getClue() == 2) {
-          if (face.getMatchingEdges(Status.IN_SOLUTION).size() == 0
-              && face.getMatchingEdges(Status.UNDECIDED).size() == 4) {
+          if (face.getMatchingEdges(Status.UNDECIDED).size() == 4) {
             Dot oppositeDot = face.getDotOppositeDot(dot);
             if (oppositeDot.getMatchingEdges(Status.UNDECIDED).size() == 3) {
               Face oppositeFace = face.getOppositeFace(grid, oppositeDot);

@@ -43,4 +43,17 @@ public class ChainedTwosTest {
 
     assertFalse(TestSolver.applySolution(grid, new ChainedTwos()));
   }
+
+  @Test
+  public void testChain_twoToTwoOnEdge() {
+    Grid grid = new Grid(2, 4);
+    grid.setGridClues(new int[]{-1, -1, 2, -1, -1, 2, -1, -1});
+    grid.getFace(1, 0).getEdge(DIR.W).setStatus(Status.OUT_SOLUTION);
+    grid.getFace(1, 0).getEdge(DIR.S).setStatus(Status.IN_SOLUTION);
+
+    assertTrue(TestSolver.applySolution(grid, new ChainedTwos()));
+    assertArrayEquals(new int[]{0, 0, 0, 1}, grid.getFaceStatus(Status.IN_SOLUTION)[0]);
+
+    assertFalse(TestSolver.applySolution(grid, new ChainedTwos()));
+  }
 }

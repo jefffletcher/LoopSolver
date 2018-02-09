@@ -2,6 +2,8 @@ package fu.kung.looper.solver.grid;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Sets;
+import fu.kung.looper.solver.grid.Edge.Status;
 import fu.kung.looper.solver.grid.Grid.DIR;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -80,6 +82,10 @@ public class Face {
       }
     }
     return matchingEdges.build();
+  }
+
+  public boolean faceEdgesUsingDotMatch(Dot dot, Status status) {
+    return Sets.intersection(getEdgesUsingDot(dot), dot.getMatchingEdges(status)).size() == 2;
   }
 
   public ImmutableSet<Edge> getEdgesOppositeDot(Dot dot) {

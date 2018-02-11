@@ -51,7 +51,7 @@ public class LoopSolver {
 
     // for (int i = 0; i < 30; i++) {
     //   runCleanupSolutions();
-    //   grid.outputSvg("/usr/local/google/home/jefffletcher/loopout.svg");
+    //   grid.outputSvg("loopout.svg");
     // }
     // applySolution(new OneWithALongEdge());
     // runCleanupSolutions();
@@ -63,7 +63,7 @@ public class LoopSolver {
     boolean done = false;
     while (!done) {
       while (runCleanupSolutions()) {
-        grid.outputSvg("/usr/local/google/home/jefffletcher/loopout.svg");
+        grid.outputSvg("loopout.svg");
       }
 
       if (!grid.isSolved()) {
@@ -71,7 +71,7 @@ public class LoopSolver {
         if (!applySolution(new RemoveSmallLoop())) {
           done = true;
         }
-        grid.outputSvg("/usr/local/google/home/jefffletcher/loopout.svg");
+        grid.outputSvg("loopout.svg");
       } else {
         System.out.println("Voila!");
         done = true;
@@ -121,7 +121,7 @@ public class LoopSolver {
           if (face.getClue() > -1
               && face.getMatchingEdges(Status.IN_SOLUTION).size() > face.getClue()) {
             System.out.printf("While running solution %s%n", solution);
-            grid.outputSvg("/usr/local/google/home/jefffletcher/loopout.svg");
+            grid.outputSvg("loopout.svg");
             throw new IllegalStateException(String.format("Too many IN_SOLUTION%n%s%n", face));
           }
           if (face.getMatchingEdges(Status.UNDECIDED).size() == 0) {
@@ -146,7 +146,7 @@ public class LoopSolver {
     solver.solve();
 
     // grid.dumpInfo();
-    // grid.outputSvg("/usr/local/google/home/jefffletcher/loopout.svg");
+    // grid.outputSvg("loopout.svg");
   }
 
   private static Grid getSimpleGrid() {

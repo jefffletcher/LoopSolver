@@ -26,7 +26,7 @@ public class LoopSolverTest {
 
     LoopSolver solver = new LoopSolver(grid);
     solver.solve();
-    // grid.outputSvg("/usr/local/google/home/jefffletcher/loopout.svg");
+    // grid.outputSvg("loopout.svg");
 
     assertTrue(
         Arrays.deepEquals(grid.getFaceStatus(Status.IN_SOLUTION),
@@ -80,7 +80,7 @@ public class LoopSolverTest {
 
     LoopSolver solver = new LoopSolver(grid);
     solver.solve();
-    // grid.outputSvg("/usr/local/google/home/jefffletcher/loopout.svg");
+    // grid.outputSvg("loopout.svg");
 
     assertTrue(
         Arrays.deepEquals(grid.getFaceStatus(Status.IN_SOLUTION),
@@ -130,7 +130,7 @@ public class LoopSolverTest {
 
     LoopSolver solver = new LoopSolver(grid);
     solver.solve();
-    // grid.outputSvg("/usr/local/google/home/jefffletcher/loopout.svg");
+    // grid.outputSvg("loopout.svg");
     assertTrue(
         Arrays.deepEquals(grid.getFaceStatus(Status.IN_SOLUTION),
             new int[][]{

@@ -210,6 +210,9 @@ public class Grid {
   }
 
   public void outputSvg(String filename) {
+    String tempDir = System.getProperty("java.io.tmpdir");
+    String fullFilename = String.format("%s/%s", tempDir, filename);
+
     StringBuilder svg = new StringBuilder();
     svg.append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n");
     svg.append("<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 20010904//EN\"\n");
@@ -278,7 +281,7 @@ public class Grid {
     svg.append("</g>\n");
 
     svg.append("</svg>\n");
-    writeOutput(filename, svg.toString());
+    writeOutput(fullFilename, svg.toString());
   }
 
   int scale(int value) {

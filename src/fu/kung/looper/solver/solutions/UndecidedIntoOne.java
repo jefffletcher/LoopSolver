@@ -19,7 +19,13 @@ public class UndecidedIntoOne extends Solution {
     for (Dot dot : face.getGridDots()) {
       if (dot.getMatchingEdges(Status.UNDECIDED).size() == 4) {
         Face oppositeFace = face.getOppositeFace(grid, dot);
-        if (oppositeFace.getClue() == 3) {
+        if (oppositeFace.getClue() == 1) {
+          if (oppositeFace.getMatchingEdges(Status.OUT_SOLUTION).size() == 2) {
+            for (Edge edge : face.getEdgesUsingDot(face.getDotOppositeDot(dot))) {
+              mutations.add(new GridMutation(edge, Status.OUT_SOLUTION));
+            }
+          }
+        } else if (oppositeFace.getClue() == 3) {
           if (oppositeFace.getMatchingEdges(Status.IN_SOLUTION).size() == 2) {
             for (Edge edge : face.getEdgesUsingDot(face.getDotOppositeDot(dot))) {
               mutations.add(new GridMutation(edge, Status.OUT_SOLUTION));

@@ -210,6 +210,10 @@ public class Grid {
   }
 
   public void outputSvg(String filename) {
+    outputSvg(filename, false);
+  }
+
+  public void outputSvg(String filename, boolean debug) {
     String tempDir = System.getProperty("java.io.tmpdir");
     String fullFilename = String.format("%s/%s", tempDir, filename);
 
@@ -277,6 +281,11 @@ public class Grid {
       svg.append(
           String.format("<ellipse cx=\"%d\" cy=\"%d\" rx=\"%d\" ry=\"%d\" fill=\"black\" />\n",
               scale(dot.getY()), scale(dot.getX()), 4, 4));
+      if (debug) {
+        svg.append(String
+            .format("<text x='%d' y='%d' fill='black' font-size='8'>(%d,%d)</text>\n",
+                scale(dot.getY()), scale(dot.getX()) - 5, dot.getY(), dot.getX()));
+      }
     }
     svg.append("</g>\n");
 

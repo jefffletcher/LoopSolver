@@ -23,6 +23,8 @@ public class InSolutionEdgesIntoTwo extends Solution {
       return;
     }
 
+    // TODO: Follow the diagonal 2's.
+
     for (Dot dot : face.getGridDots()) {
       List<Edge> edges =
           Lists.newArrayList(Sets.difference(dot.getEdges(), face.getEdgesUsingDot(dot)));
@@ -51,6 +53,9 @@ public class InSolutionEdgesIntoTwo extends Solution {
   }
 
   private boolean matchesCriteria(List<Edge> edges) {
+    if (edges.size() == 0) {
+      return false;
+    }
     if (edges.size() == 1) {
       return edges.get(0).getStatus() == Status.IN_SOLUTION;
     }

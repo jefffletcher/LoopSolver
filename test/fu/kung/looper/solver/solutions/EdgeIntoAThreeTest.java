@@ -17,16 +17,40 @@ import org.junit.runners.JUnit4;
 public class EdgeIntoAThreeTest {
 
   @Test
-  public void testSimpleCase() {
-    Grid grid = new Grid(1, 2);
-    grid.setGridClues(new int[]{-1, 3});
-    Face face = grid.getFace(0, 0);
+  public void testWithUndecided() {
+    Grid grid = new Grid(2, 2);
+    grid.setGridClues(new int[]{-1, -1, -1, 3});
+    Face face = grid.getFace(1, 0);
     face.getEdge(DIR.N).setStatus(Status.IN_SOLUTION);
 
-    assertArrayEquals(new int[]{1, 0}, grid.getFaceStatus(Status.IN_SOLUTION)[0]);
+    assertTrue(TestSolver.applySolution(grid, new EdgeIntoAThree()));
+    assertArrayEquals(new int[]{1, 6}, grid.getFaceStatus(Status.IN_SOLUTION)[1]);
+    assertArrayEquals(new int[]{4, 8}, grid.getFaceStatus(Status.OUT_SOLUTION)[0]);
+
+    assertFalse(TestSolver.applySolution(grid, new EdgeIntoAThree()));
+  }
+
+  @Test
+  public void testSimpleCase() {
+    Grid grid = new Grid(2, 2);
+    grid.setGridClues(new int[]{-1, -1, -1, 3});
+    grid.getFace(0, 0).getEdge(DIR.S).setStatus(Status.IN_SOLUTION);
+    grid.getFace(0, 0).getEdge(DIR.E).setStatus(Status.OUT_SOLUTION);
 
     assertTrue(TestSolver.applySolution(grid, new EdgeIntoAThree()));
-    assertArrayEquals(new int[]{1, 6}, grid.getFaceStatus(Status.IN_SOLUTION)[0]);
+    assertArrayEquals(new int[]{1, 6}, grid.getFaceStatus(Status.IN_SOLUTION)[1]);
+
+    assertFalse(TestSolver.applySolution(grid, new EdgeIntoAThree()));
+  }
+
+  @Test
+  public void testEdge() {
+    Grid grid = new Grid(2, 1);
+    grid.setGridClues(new int[]{-1, 3});
+    grid.getFace(0, 0).getEdge(DIR.W).setStatus(Status.IN_SOLUTION);
+
+    assertTrue(TestSolver.applySolution(grid, new EdgeIntoAThree()));
+    assertArrayEquals(new int[]{6}, grid.getFaceStatus(Status.IN_SOLUTION)[1]);
 
     assertFalse(TestSolver.applySolution(grid, new EdgeIntoAThree()));
   }

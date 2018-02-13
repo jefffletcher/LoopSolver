@@ -22,7 +22,8 @@ public class LoopSolverTest {
             3, -1, 2, -1, -1, 2, -1,
             -1, -1, -1, 3, -1, -1, -1,
             3, -1, -1, 3, 1, -1, -1,
-            -1, 1, 1, 3, 1, 1, -1});
+            -1, 1, 1, 3, 1, 1, -1
+        });
 
     LoopSolver solver = new LoopSolver(grid);
     solver.solve();
@@ -75,8 +76,7 @@ public class LoopSolverTest {
             -1, -1, -1, -1, 1, -1, -1, -1, -1, 3,
             2, 3, -1, 2, 2, -1, 1, -1, -1, 3,
             2, 2, 2, 2, -1, 2, 2, -1, -1, 3
-        }
-    );
+        });
 
     LoopSolver solver = new LoopSolver(grid);
     solver.solve();
@@ -125,8 +125,7 @@ public class LoopSolverTest {
             -1, -1, 1, -1, 2, -1, 2, -1, 2, 2,
             2, -1, 2, -1, -1, 3, -1, -1, -1, -1,
             -1, 2, 1, 3, -1, -1, -1, -1, -1, 3
-        }
-    );
+        });
 
     LoopSolver solver = new LoopSolver(grid);
     solver.solve();
@@ -158,5 +157,27 @@ public class LoopSolverTest {
                 {4, 12, 14, 12, 12, 15, 12, 14, 12, 9},
                 {12, 8, 3, 4, 10, 1, 2, 3, 4, 12},
                 {4, 12, 13, 8, 7, 14, 11, 5, 12, 8}}));
+  }
+
+  @Test
+  public void testTenByTenTricky_3() {
+    Grid grid = new Grid(10, 10);
+    grid.setGridClues(
+        new int[]{
+            3, -1, -1, -1, 3, -1, -1, 2, -1, 1,
+            2, -1, -1, -1, -1, -1, -1, 2, -1, -1,
+            2, -1, -1, 2, -1, 3, -1, 2, 1, 3,
+            2, 1, 1, 2, 2, 1, -1, 1, -1, 3,
+            -1, -1, -1, 1, 2, 2, 3, -1, -1, -1,
+            2, 2, -1, -1, 2, 2, -1, -1, 3, -1,
+            3, 0, 2, -1, 3, -1, -1, 2, -1, 3,
+            3, -1, 3, -1, -1, -1, -1, -1, 2, -1,
+            2, -1, 1, -1, 1, 1, -1, 1, -1, 2,
+            -1, -1, 1, -1, 3, -1, 2, 2, -1, 2
+        });
+
+    LoopSolver solver = new LoopSolver(grid);
+    solver.solve();
+    grid.outputSvg("loopout.svg");
   }
 }

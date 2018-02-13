@@ -17,7 +17,13 @@ public abstract class Solution {
       for (int j = 0; j < grid.getColumns(); j++) {
         Face face = grid.getFace(i, j);
         if (!face.isComplete()) {
-          processFace(grid, face, mutations);
+          try {
+            processFace(grid, face, mutations);
+          } catch (Throwable e) {
+            grid.outputSvg("loopout.svg", true);
+            System.out.printf("face: %s", face);
+            throw e;
+          }
         }
       }
     }
